@@ -184,7 +184,7 @@ L.TileLayer.include({
 
 			for (var j = tileBounds.min.y; j <= tileBounds.max.y; j++) {
 				for (var i = tileBounds.min.x; i <= tileBounds.max.x; i++) {
-					point = new L.Point(i, j);
+					var point = new L.Point(i, j);
 					point.z = z;
 					queue.push(this._getTileUrl(point));
 				}

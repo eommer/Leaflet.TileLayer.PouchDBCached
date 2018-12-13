@@ -1,4 +1,4 @@
-
+import PouchDB from 'pouchdb';
 
 L.TileLayer.addInitHook(function() {
 
@@ -146,14 +146,15 @@ L.TileLayer.include({
 			this.fire('tilecacheerror', { tile: tile, error: err });
 			return done();
 		}
-		var doc = {dataUrl: dataUrl, timestamp: Date.now()};
+
+		// add the tileURl as the _id
+		var doc = {_id : tileUrl, dataUrl: dataUrl, timestamp: Date.now()};
 
 		if (existingRevision) {
 			this._db.remove(tileUrl, existingRevision);
 		}
-		/// FIXME: There is a deprecation warning about parameters in the
 		///   this._db.put() call.
-		this._db.put(doc, tileUrl, doc.timestamp);
+		this._db.put(doc);
 
 		if (done) { done(); }
 	},
@@ -259,5 +260,3 @@ L.TileLayer.include({
 	}
 
 });
-
-
